@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "@aws-cdk/aws-apigateway": "^1.203.0",
+    "@aws-cdk/aws-dynamodb": "^1.203.0",
+    "@aws-cdk/aws-events": "^1.203.0",
+    "@aws-cdk/aws-events-targets": "^1.203.0",
+    "@aws-cdk/aws-iam": "^1.203.0",
+    "@aws-cdk/aws-lambda": "^1.203.0",
+    "vitest": "^3.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.10"
+  },
+  "scripts": {
+    "clean": "rm -rf node_modules backend/node_modules frontend/node_modules infrastructure/node_modules",
+    "reset": "npm run clean &>/dev/null && npm install",
+    "build": "tsc -b",
+    "deploy": "cdk deploy --all --require-approval never",
+    "synth": "cdk synth",
+    "test": "jest"
+  }
+}
