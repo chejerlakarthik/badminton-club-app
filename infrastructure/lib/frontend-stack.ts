@@ -2,7 +2,7 @@ import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
-import { S3StaticWebsiteOrigin } from 'aws-cdk-lib/aws-cloudfront-origins';
+import { S3BucketOrigin } from 'aws-cdk-lib/aws-cloudfront-origins';
 import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment';
 
 export class FrontendStack extends cdk.Stack {
@@ -14,8 +14,6 @@ export class FrontendStack extends cdk.Stack {
 
     // S3 bucket for frontend hosting
     this.bucket = new s3.Bucket(this, 'BadmintonClubAppFrontend', {
-      websiteIndexDocument: 'index.html',
-      websiteErrorDocument: 'index.html',
       publicReadAccess: false,
       removalPolicy: cdk.RemovalPolicy.RETAIN,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
@@ -25,14 +23,14 @@ export class FrontendStack extends cdk.Stack {
     this.distribution = new cloudfront.Distribution(this, 'BadmintonClubAppDistribution', {
       defaultRootObject: 'index.html',
       defaultBehavior: {
-        origin: new S3StaticWebsiteOrigin(this.bucket),
+        origin: S3BucketOrigin.withOriginAccessControl(this.bucket),
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
       },
     });
 
     // Deploy frontend build to S3 and invalidate CloudFront
     new s3deploy.BucketDeployment(this, 'DeployFrontend', {
-      sources: [s3deploy.Source.asset('../../frontend/build')], // Change to '../frontend/dist' if needed
+      sources: [s3deploy.Source.asset('../frontend/build')],
       destinationBucket: this.bucket,
       distribution: this.distribution,
       distributionPaths: ['/*'],
