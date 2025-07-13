@@ -79,7 +79,7 @@ jobs:
         run: npm ci
 
       - name: Verify tree structure
-        working-directory: ./
+        working-directory: ./frontend
         run: |
           pwd
           echo "Current directory contents:"
