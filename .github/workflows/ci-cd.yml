@@ -145,9 +145,9 @@ jobs:
         working-directory: ./infrastructure
         run: npm run cdk:deploy:backend
 
-      - name: Deploy frontend infrastructure
-        working-directory: ./infrastructure
-        run: npm run cdk:deploy:frontend
+#      - name: Deploy frontend infrastructure
+#        working-directory: ./infrastructure
+#        run: npm run cdk:deploy:frontend
 
       - name: Print build completion message
         run: echo "Build and deployment completed successfully!"
