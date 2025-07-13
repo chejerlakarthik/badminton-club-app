@@ -1,0 +1,1 @@
+{"version":3,"file":"booking-processor.d.ts","sourceRoot":"","sources":["../../../../src/app/lambdas/events/booking-processor.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,gBAAgB,EAAE,MAAM,YAAY,CAAC;AAK9C,eAAO,MAAM,OAAO,GAAU,OAAO,gBAAgB,CAAC,MAAM,EAAE,GAAG,CAAC,kBAejE,CAAC"}

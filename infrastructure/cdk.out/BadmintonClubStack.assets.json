@@ -1,0 +1,34 @@
+{
+  "version": "34.0.0",
+  "files": {
+    "a333601334b32f3db1e5cbdeb1c68b3b26e3746e8c45fc83e56ae3894be0e13e": {
+      "source": {
+        "path": "asset.a333601334b32f3db1e5cbdeb1c68b3b26e3746e8c45fc83e56ae3894be0e13e",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "762233758459-ap-southeast-2": {
+          "bucketName": "cdk-hnb659fds-assets-762233758459-ap-southeast-2",
+          "objectKey": "a333601334b32f3db1e5cbdeb1c68b3b26e3746e8c45fc83e56ae3894be0e13e.zip",
+          "region": "ap-southeast-2",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::762233758459:role/cdk-hnb659fds-file-publishing-role-762233758459-ap-southeast-2"
+        }
+      }
+    },
+    "7b6b0c247d8643c7e1bfdc77e2a942db7ac21a692536278e180c0e8182492d76": {
+      "source": {
+        "path": "BadmintonClubStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "762233758459-ap-southeast-2": {
+          "bucketName": "cdk-hnb659fds-assets-762233758459-ap-southeast-2",
+          "objectKey": "7b6b0c247d8643c7e1bfdc77e2a942db7ac21a692536278e180c0e8182492d76.json",
+          "region": "ap-southeast-2",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::762233758459:role/cdk-hnb659fds-file-publishing-role-762233758459-ap-southeast-2"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}
