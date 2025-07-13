@@ -6,7 +6,7 @@ import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as events from 'aws-cdk-lib/aws-events';
 import * as targets from 'aws-cdk-lib/aws-events-targets';
 import * as iam from 'aws-cdk-lib/aws-iam';
-import * as ssm from 'aws-cdk-lib/aws-ssm';
+// import * as ssm from 'aws-cdk-lib/aws-ssm';
 
 export class BadmintonClubStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -38,11 +38,11 @@ export class BadmintonClubStack extends cdk.Stack {
     };
 
     // Helper to create Lambda functions
-    const createLambda = (id: string, handler: string) => {
+    const createLambda = (id: string, codePath: string) => {
       const fn = new lambda.Function(this, id, {
-        runtime: lambda.Runtime.NODEJS_18_X,
-        handler,
-        code: lambda.Code.fromAsset('../backend/build'),
+        runtime: lambda.Runtime.NODEJS_22_X,
+        handler: 'index.handler',
+        code: lambda.Code.fromAsset(`../backend/dist/${codePath}`),
         memorySize: 256,
         timeout: cdk.Duration.seconds(30),
         environment: lambdaEnv,
@@ -62,14 +62,14 @@ export class BadmintonClubStack extends cdk.Stack {
     };
 
     // Lambda Functions
-    const registerLambda = createLambda('RegisterLambda', 'app/lambdas/auth/register.handler');
-    const loginLambda = createLambda('LoginLambda', 'app/lambdas/auth/login.handler');
-    const getProfileLambda = createLambda('GetProfileLambda', 'app/lambdas/users/get-profile.handler');
-    const updateProfileLambda = createLambda('UpdateProfileLambda', 'app/lambdas/users/update-profile.handler');
-    const createBookingLambda = createLambda('CreateBookingLambda', 'app/lambdas/bookings/create.handler');
-    const createCourtLambda = createLambda('CreateCourtLambda', 'app/lambdas/courts/create-court.handler');
-    const getCourtsLambda = createLambda('GetCourtsLambda', 'app/lambdas/courts/get-courts.handler');
-    const bookingProcessorLambda = createLambda('BookingProcessorLambda', 'app/lambdas/events/booking-processor.handler');
+    const registerLambda = createLambda('RegisterLambda', 'auth/register');
+    const loginLambda = createLambda('LoginLambda', 'auth/login');
+    const getProfileLambda = createLambda('GetProfileLambda', 'users/get-profile');
+    const updateProfileLambda = createLambda('UpdateProfileLambda', 'users/update-profile');
+    const createBookingLambda = createLambda('CreateBookingLambda', 'bookings/create');
+    const createCourtLambda = createLambda('CreateCourtLambda', 'courts/create-court');
+    const getCourtsLambda = createLambda('GetCourtsLambda', 'courts/get-courts');
+    const bookingProcessorLambda = createLambda('BookingProcessorLambda', 'events/booking-processor');
 
     // API Gateway
     const api = new apigateway.RestApi(this, 'BadmintonClubApi', {

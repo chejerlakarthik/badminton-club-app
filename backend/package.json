@@ -3,15 +3,19 @@
   "version": "1.0.0",
   "description": "Serverless backend for badminton club management",
   "main": "index.js",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
-    "clean": "rm -rf node_modules",
-    "reset": "npm run clean &>/dev/null && npm install",
+    "clean": "rm -rf node_modules dist",
+    "reset": "npm run clean >/dev/null && npm install",
     "dev": "npm run build && cdk synth && cdk deploy --hotswap",
     "deploy": "npm run build && cdk deploy",
     "test": "vitest",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
-    "build": "tsc"
+    "build": "node build.js",
+    "build:watch": "node build.js --watch"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.410.0",
@@ -27,7 +31,6 @@
     "constructs": "^10.4.2",
     "jsonwebtoken": "^9.0.2",
     "lambda-log": "^3.1.0",
-    "serverless": "^4.17.1",
     "uuid": "^9.0.0",
     "zod": "^3.22.2"
   },
@@ -37,6 +40,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.0.13",
     "@types/uuid": "^10.0.0",
+    "esbuild": "^0.24.0",
     "vitest": "^3.2.4"
   }
 }

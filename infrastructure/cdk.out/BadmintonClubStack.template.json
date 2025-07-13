@@ -175,7 +175,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-762233758459-ap-southeast-2",
-     "S3Key": "b00629c37939a6f06d9e1077b006ed5568ba3bb1c82d7f38cf95c80ec0ea5d81.zip"
+     "S3Key": "88c0160dcd090d2d898c65d721d3e0bf960003cb41545d813c4590512f951963.zip"
     },
     "Environment": {
      "Variables": {
@@ -187,7 +187,7 @@
       "JWT_SECRET": "test-secret-key"
      }
     },
-    "Handler": "app/lambdas/auth/register.handler",
+    "Handler": "index.handler",
     "MemorySize": 256,
     "Role": {
      "Fn::GetAtt": [
@@ -195,7 +195,7 @@
       "Arn"
      ]
     },
-    "Runtime": "nodejs18.x",
+    "Runtime": "nodejs22.x",
     "Timeout": 30
    },
    "DependsOn": [
@@ -204,7 +204,7 @@
    ],
    "Metadata": {
     "aws:cdk:path": "BadmintonClubStack/RegisterLambda/Resource",
-    "aws:asset:path": "asset.b00629c37939a6f06d9e1077b006ed5568ba3bb1c82d7f38cf95c80ec0ea5d81",
+    "aws:asset:path": "asset.88c0160dcd090d2d898c65d721d3e0bf960003cb41545d813c4590512f951963",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
@@ -316,7 +316,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-762233758459-ap-southeast-2",
-     "S3Key": "b00629c37939a6f06d9e1077b006ed5568ba3bb1c82d7f38cf95c80ec0ea5d81.zip"
+     "S3Key": "1fe041007d7921e4b28d4767845bad0d283cb1d51c05f9c51e159cb91464629d.zip"
     },
     "Environment": {
      "Variables": {
@@ -328,7 +328,7 @@
       "JWT_SECRET": "test-secret-key"
      }
     },
-    "Handler": "app/lambdas/auth/login.handler",
+    "Handler": "index.handler",
     "MemorySize": 256,
     "Role": {
      "Fn::GetAtt": [
@@ -336,7 +336,7 @@
       "Arn"
      ]
     },
-    "Runtime": "nodejs18.x",
+    "Runtime": "nodejs22.x",
     "Timeout": 30
    },
    "DependsOn": [
@@ -345,7 +345,7 @@
    ],
    "Metadata": {
     "aws:cdk:path": "BadmintonClubStack/LoginLambda/Resource",
-    "aws:asset:path": "asset.b00629c37939a6f06d9e1077b006ed5568ba3bb1c82d7f38cf95c80ec0ea5d81",
+    "aws:asset:path": "asset.1fe041007d7921e4b28d4767845bad0d283cb1d51c05f9c51e159cb91464629d",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
@@ -457,7 +457,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-762233758459-ap-southeast-2",
-     "S3Key": "b00629c37939a6f06d9e1077b006ed5568ba3bb1c82d7f38cf95c80ec0ea5d81.zip"
+     "S3Key": "2ed08699e2e33d2fd3928e0df5160961dfe7ea8a8395052647b43508075bc17c.zip"
     },
     "Environment": {
      "Variables": {
@@ -469,7 +469,7 @@
       "JWT_SECRET": "test-secret-key"
      }
     },
-    "Handler": "app/lambdas/users/get-profile.handler",
+    "Handler": "index.handler",
     "MemorySize": 256,
     "Role": {
      "Fn::GetAtt": [
@@ -477,7 +477,7 @@
       "Arn"
      ]
     },
-    "Runtime": "nodejs18.x",
+    "Runtime": "nodejs22.x",
     "Timeout": 30
    },
    "DependsOn": [
@@ -486,7 +486,7 @@
    ],
    "Metadata": {
     "aws:cdk:path": "BadmintonClubStack/GetProfileLambda/Resource",
-    "aws:asset:path": "asset.b00629c37939a6f06d9e1077b006ed5568ba3bb1c82d7f38cf95c80ec0ea5d81",
+    "aws:asset:path": "asset.2ed08699e2e33d2fd3928e0df5160961dfe7ea8a8395052647b43508075bc17c",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
@@ -598,7 +598,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-762233758459-ap-southeast-2",
-     "S3Key": "b00629c37939a6f06d9e1077b006ed5568ba3bb1c82d7f38cf95c80ec0ea5d81.zip"
+     "S3Key": "e0dc29bc647574be684b72e65daf51ff2d96b009175e99f7ab1301a83c2058d4.zip"
     },
     "Environment": {
      "Variables": {
@@ -610,7 +610,7 @@
       "JWT_SECRET": "test-secret-key"
      }
     },
-    "Handler": "app/lambdas/users/update-profile.handler",
+    "Handler": "index.handler",
     "MemorySize": 256,
     "Role": {
      "Fn::GetAtt": [
@@ -618,7 +618,7 @@
       "Arn"
      ]
     },
-    "Runtime": "nodejs18.x",
+    "Runtime": "nodejs22.x",
     "Timeout": 30
    },
    "DependsOn": [
@@ -627,7 +627,7 @@
    ],
    "Metadata": {
     "aws:cdk:path": "BadmintonClubStack/UpdateProfileLambda/Resource",
-    "aws:asset:path": "asset.b00629c37939a6f06d9e1077b006ed5568ba3bb1c82d7f38cf95c80ec0ea5d81",
+    "aws:asset:path": "asset.e0dc29bc647574be684b72e65daf51ff2d96b009175e99f7ab1301a83c2058d4",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
@@ -739,7 +739,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-762233758459-ap-southeast-2",
-     "S3Key": "b00629c37939a6f06d9e1077b006ed5568ba3bb1c82d7f38cf95c80ec0ea5d81.zip"
+     "S3Key": "edbca1b8e6c7440d83d790769f9e40b9f6b33cd4fba4f8f5ed5609e62ca30ecb.zip"
     },
     "Environment": {
      "Variables": {
@@ -751,7 +751,7 @@
       "JWT_SECRET": "test-secret-key"
      }
     },
-    "Handler": "app/lambdas/bookings/create.handler",
+    "Handler": "index.handler",
     "MemorySize": 256,
     "Role": {
      "Fn::GetAtt": [
@@ -759,7 +759,7 @@
       "Arn"
      ]
     },
-    "Runtime": "nodejs18.x",
+    "Runtime": "nodejs22.x",
     "Timeout": 30
    },
    "DependsOn": [
@@ -768,7 +768,7 @@
    ],
    "Metadata": {
     "aws:cdk:path": "BadmintonClubStack/CreateBookingLambda/Resource",
-    "aws:asset:path": "asset.b00629c37939a6f06d9e1077b006ed5568ba3bb1c82d7f38cf95c80ec0ea5d81",
+    "aws:asset:path": "asset.edbca1b8e6c7440d83d790769f9e40b9f6b33cd4fba4f8f5ed5609e62ca30ecb",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
@@ -880,7 +880,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-762233758459-ap-southeast-2",
-     "S3Key": "b00629c37939a6f06d9e1077b006ed5568ba3bb1c82d7f38cf95c80ec0ea5d81.zip"
+     "S3Key": "aef27dda1923c3fd8db9082ad849fe8b329c4b8b8b2ea8724524860ca5df1839.zip"
     },
     "Environment": {
      "Variables": {
@@ -892,7 +892,7 @@
       "JWT_SECRET": "test-secret-key"
      }
     },
-    "Handler": "app/lambdas/courts/create-court.handler",
+    "Handler": "index.handler",
     "MemorySize": 256,
     "Role": {
      "Fn::GetAtt": [
@@ -900,7 +900,7 @@
       "Arn"
      ]
     },
-    "Runtime": "nodejs18.x",
+    "Runtime": "nodejs22.x",
     "Timeout": 30
    },
    "DependsOn": [
@@ -909,7 +909,7 @@
    ],
    "Metadata": {
     "aws:cdk:path": "BadmintonClubStack/CreateCourtLambda/Resource",
-    "aws:asset:path": "asset.b00629c37939a6f06d9e1077b006ed5568ba3bb1c82d7f38cf95c80ec0ea5d81",
+    "aws:asset:path": "asset.aef27dda1923c3fd8db9082ad849fe8b329c4b8b8b2ea8724524860ca5df1839",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
@@ -1021,7 +1021,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-762233758459-ap-southeast-2",
-     "S3Key": "b00629c37939a6f06d9e1077b006ed5568ba3bb1c82d7f38cf95c80ec0ea5d81.zip"
+     "S3Key": "cfd6df60e30abbe702ece8d54acd380850be19a04777fd8fa922350621af7a12.zip"
     },
     "Environment": {
      "Variables": {
@@ -1033,7 +1033,7 @@
       "JWT_SECRET": "test-secret-key"
      }
     },
-    "Handler": "app/lambdas/courts/get-courts.handler",
+    "Handler": "index.handler",
     "MemorySize": 256,
     "Role": {
      "Fn::GetAtt": [
@@ -1041,7 +1041,7 @@
       "Arn"
      ]
     },
-    "Runtime": "nodejs18.x",
+    "Runtime": "nodejs22.x",
     "Timeout": 30
    },
    "DependsOn": [
@@ -1050,7 +1050,7 @@
    ],
    "Metadata": {
     "aws:cdk:path": "BadmintonClubStack/GetCourtsLambda/Resource",
-    "aws:asset:path": "asset.b00629c37939a6f06d9e1077b006ed5568ba3bb1c82d7f38cf95c80ec0ea5d81",
+    "aws:asset:path": "asset.cfd6df60e30abbe702ece8d54acd380850be19a04777fd8fa922350621af7a12",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
@@ -1162,7 +1162,7 @@
    "Properties": {
     "Code": {
      "S3Bucket": "cdk-hnb659fds-assets-762233758459-ap-southeast-2",
-     "S3Key": "b00629c37939a6f06d9e1077b006ed5568ba3bb1c82d7f38cf95c80ec0ea5d81.zip"
+     "S3Key": "4a6e68d9e44d7ef4a67fda3c6076ecb2a8ae74452746558aabfb800075b2ac5f.zip"
     },
     "Environment": {
      "Variables": {
@@ -1174,7 +1174,7 @@
       "JWT_SECRET": "test-secret-key"
      }
     },
-    "Handler": "app/lambdas/events/booking-processor.handler",
+    "Handler": "index.handler",
     "MemorySize": 256,
     "Role": {
      "Fn::GetAtt": [
@@ -1182,7 +1182,7 @@
       "Arn"
      ]
     },
-    "Runtime": "nodejs18.x",
+    "Runtime": "nodejs22.x",
     "Timeout": 30
    },
    "DependsOn": [
@@ -1191,7 +1191,7 @@
    ],
    "Metadata": {
     "aws:cdk:path": "BadmintonClubStack/BookingProcessorLambda/Resource",
-    "aws:asset:path": "asset.b00629c37939a6f06d9e1077b006ed5568ba3bb1c82d7f38cf95c80ec0ea5d81",
+    "aws:asset:path": "asset.4a6e68d9e44d7ef4a67fda3c6076ecb2a8ae74452746558aabfb800075b2ac5f",
     "aws:asset:is-bundled": false,
     "aws:asset:property": "Code"
    }
@@ -1238,7 +1238,8 @@
     "BadmintonClubApiusersC76F1A63"
    ],
    "Metadata": {
-    "aws:cdk:path": "BadmintonClubStack/BadmintonClubApi/Deployment/Resource"
+    "aws:cdk:path": "BadmintonClubStack/BadmintonClubApi/Deployment/Resource",
+    "aws:cdk:do-not-refactor": true
    }
   },
   "BadmintonClubApiDeploymentStagedevBF744B2F": {
@@ -2452,7 +2453,7 @@
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1WPzU7DMBCEn6V3xzSBF2j4OyGqgLhWm3gJbvwTZe1WUeR3x3YDlNPMzqy+1Va83Ja83MCZik4MhZItX94cdAOL0WERswFtRQzfoVX4UbH7T/OsbAsqB4Ep0K0Avjx50zlpTVq49nuctCSKU2ASNF8aqzAVWfdWyW7Oe9kFRrcHIEJHfJckzrz23YCuBkIGo+zB4RnmCEJyu1Fm1mofcFR21mhcSq+m+FKfr15M3Ld+6jAzX9B9WZHK1f20Kzn7wPAUQcSXx6S1p9T++savT0UN4Y+Qf0g3pelT/+rd6N1/sLEC+ZFuTtUdL/l2cyQpi8kbJzXy5qLf6H4Qt6gBAAA="
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/02QzU7DMBCEn4W7Y0roCzT8nRBVQFyrjb0EN/6JsnarKPK7Y7sBeppvZ1ZjrWteb7Z8cwNnqoQcKq06vrx7EANL1mGRswXjZDI/oNP4WbOHL/uiXQe6GJFpMJ0EvjwHK7xyNi9c8x4no4jSFJkCw5fWacxB0b3TSsxlr1BkdH8AIvTEd1nSzJsgBvQNEDIYVQ8ezzCnIiS/G1XpWvERR+1mg9Zn92pKJ/Xl1QukfRcmgaXzFf23kzlc6TddmwtHhqdURHx5ytoEyukft2E9KmmM/w3lhvymsn3O34Ifg4/MOon8SLenesvv0v8fSalqCtYrg7y96A+wIqpMnAEAAA=="
    },
    "Metadata": {
     "aws:cdk:path": "BadmintonClubStack/CDKMetadata/Default"
