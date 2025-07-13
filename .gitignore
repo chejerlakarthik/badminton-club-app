@@ -9,6 +9,6 @@ infrastructure/node_modules/
 backend/build/
 backend/dist/
 
-infrastructure/cdk.out/
+infrastructure/cdk.out/**/*.json
 infrastructure/**/*.js
 infrastructure/**/*.d.ts
