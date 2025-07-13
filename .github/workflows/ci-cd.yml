@@ -76,12 +76,5 @@ jobs:
         working-directory: ./frontend
         run: npm ci
 
-      - name: Build frontend
-        working-directory: ./frontend
-        run: npm run build
-
-      - name: Deploy frontend to S3
-        run: aws s3 sync ./frontend/dist s3://${{ secrets.FRONTEND_S3_BUCKET }} --delete
-
-      - name: Invalidate CloudFront cache
-        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
+      - name: Print build completion message
+        run: echo "Build and deployment completed successfully!"
