@@ -2,7 +2,7 @@
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
 import { BadmintonClubStack } from '../lib/badminton-club-stack';
-import {FrontendStack} from "../lib/frontend-stack";
+// import {FrontendStack} from "../lib/frontend-stack";
 
 const app = new cdk.App();
 
@@ -17,8 +17,8 @@ new BadmintonClubStack(app, 'BadmintonClubStack', {
     },
 });
 
-new FrontendStack(app, 'FrontendStack', {
-    env: {
-        account: process.env.CDK_DEFAULT_ACCOUNT || AWS_ACCOUNT_ID,
-    }
-})
+// new FrontendStack(app, 'FrontendStack', {
+//     env: {
+//         account: process.env.CDK_DEFAULT_ACCOUNT || AWS_ACCOUNT_ID,
+//     }
+// })
