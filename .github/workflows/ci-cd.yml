@@ -8,6 +8,13 @@ on:
     branches:
       - main
 
+  workflow_dispatch:
+    inputs:
+      stack-name:
+        description: 'Stack to deploy'
+        required: false
+        default: '*'
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -63,7 +70,7 @@ jobs:
 
       - name: Build infrastructure (CDK synth)
         working-directory: ./infrastructure
-        run: npm run build && npm run infra:build
+        run: npm run build && npm run cdk:build
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -74,7 +81,7 @@ jobs:
 
       - name: Deploy infrastructure (CDK deploy)
         working-directory: ./infrastructure
-        run: npm run infra:deployAll
+        run: npm run cdk:deploy
 
       - name: Print build completion message
         run: echo "Build and deployment completed successfully!"

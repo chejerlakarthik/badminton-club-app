@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
-import { BadmintonClubStack } from '../lib/badminton-club-stack';
 import {FrontendStack} from "../lib/frontend-stack";
+import {BackendStack} from "../lib/backend-stack";
 
 const app = new cdk.App();
 
@@ -10,7 +10,7 @@ const app = new cdk.App();
 const AWS_ACCOUNT_ID = '762233758459';
 const REGION_AP_SOUTHEAST_2 = 'ap-southeast-2';
 
-new BadmintonClubStack(app, 'BadmintonClubStack', {
+new BackendStack(app, 'BackendStack', {
     env: {
         account: process.env.CDK_DEFAULT_ACCOUNT || AWS_ACCOUNT_ID,
         region: process.env.CDK_DEFAULT_REGION || REGION_AP_SOUTHEAST_2,

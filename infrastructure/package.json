@@ -10,9 +10,10 @@
     "clean": "rm -rf node_modules",
     "reset": "npm run clean &>/dev/null && npm install",
     "build": "tsc",
-    "infra:build": "cdk synth",
-    "infra:deploy": "cdk deploy --require-approval never",
-    "infra:deployAll": "cdk deploy --all --require-approval never"
+    "cdk:build": "cdk synth",
+    "cdk:deploy": "cdk deploy --all --require-approval never",
+    "cdk:deploy:backend": "cd k deploy BackendStack --require-approval never",
+    "cdk:deploy:frontend": "cdk deploy FrontendStack --require-approval never"
   },
   "keywords": [],
   "author": "Karthik Chejerla",
