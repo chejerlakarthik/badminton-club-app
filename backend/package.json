@@ -1,60 +1,39 @@
 {
-  "name": "badminton-club-backend",
+  "name": "badminton-club-app",
   "version": "1.0.0",
-  "description": "Serverless backend for Badminton Club Management App",
+  "description": "Serverless backend for badminton club management",
   "main": "index.js",
   "scripts": {
-    "dev": "serverless offline start",
-    "deploy": "serverless deploy",
-    "deploy:prod": "serverless deploy --stage prod",
-    "remove": "serverless remove",
-    "logs": "serverless logs -f",
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "clean": "rm -rf node_modules",
+    "reset": "npm run clean &>/dev/null && npm install",
+    "dev": "npm run build && cdk synth && cdk deploy --hotswap",
+    "deploy": "npm run build && cdk deploy",
+    "test": "vitest",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
     "build": "tsc"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.400.0",
-    "@aws-sdk/client-ses": "^3.400.0",
-    "@aws-sdk/client-sns": "^3.400.0",
-    "@aws-sdk/lib-dynamodb": "^3.400.0",
+    "@aws-sdk/client-dynamodb": "^3.410.0",
+    "@aws-sdk/client-eventbridge": "^3.410.0",
+    "@aws-sdk/client-ses": "^3.410.0",
+    "@aws-sdk/client-sns": "^3.410.0",
+    "@aws-sdk/lib-dynamodb": "^3.410.0",
+    "aws-cdk-lib": "^2.204.0",
     "aws-lambda": "^1.0.7",
     "bcryptjs": "^2.4.3",
+    "cdk-dia": "^0.12.0",
+    "constructs": "^10.4.2",
     "jsonwebtoken": "^9.0.2",
+    "serverless": "^4.17.1",
     "uuid": "^9.0.0",
-    "validator": "^13.11.0"
+    "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.119",
-    "@types/bcryptjs": "^2.4.2",
-    "@types/jest": "^29.5.5",
-    "@types/jsonwebtoken": "^9.0.2",
-    "@types/node": "^20.5.0",
-    "@types/uuid": "^9.0.2",
-    "@types/validator": "^13.11.1",
-    "@typescript-eslint/eslint-plugin": "^6.4.1",
-    "@typescript-eslint/parser": "^6.4.1",
-    "eslint": "^8.47.0",
-    "jest": "^29.6.2",
-    "serverless": "^3.34.0",
-    "serverless-offline": "^12.0.4",
-    "serverless-plugin-typescript": "^2.1.4",
-    "ts-jest": "^29.1.1",
-    "typescript": "^5.1.6"
-  },
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node",
-    "roots": ["<rootDir>/src"],
-    "testMatch": ["**/__tests__/**/*.ts", "**/?(*.)+(spec|test).ts"],
-    "collectCoverageFrom": [
-      "src/**/*.ts",
-      "!src/**/*.d.ts",
-      "!src/**/__tests__/**"
-    ]
-  },
-  "author": "Badminton Club Admin",
-  "license": "MIT"
+    "@types/aws-lambda": "^8.10.150",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^24.0.10",
+    "vitest": "^3.2.4"
+  }
 }

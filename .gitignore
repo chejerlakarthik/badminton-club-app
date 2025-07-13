@@ -1,0 +1,11 @@
+/backend/node_modules/
+/backend/build/
+
+/frontend/node_modules/
+
+/infrastructure/node_modules/
+/infrastructure/cdk.out/
+
+/node_modules/
+
+/.idea/
