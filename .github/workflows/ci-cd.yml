@@ -63,7 +63,7 @@ jobs:
 
       - name: Build infrastructure (CDK synth)
         working-directory: ./infrastructure
-        run: npm run build && npm run cdk synth
+        run: npm run build && npm run infra:build
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -74,7 +74,7 @@ jobs:
 
       - name: Deploy infrastructure (CDK deploy)
         working-directory: ./infrastructure
-        run: npx cdk deploy --all --require-approval never
+        run: npm run infra:deployAll
 
       - name: Print build completion message
         run: echo "Build and deployment completed successfully!"
