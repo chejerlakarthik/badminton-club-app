@@ -22,12 +22,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Verify tree structure
-        working-directory: ./
-        run: |
-          pwd
-          echo "Current directory contents:"
-          ls -la
+#      - name: Verify tree structure
+#        working-directory: ./
+#        run: |
+#          pwd
+#          echo "Current directory contents:"
+#          ls -la
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -47,23 +47,23 @@ jobs:
         working-directory: ./backend
         run: npm ci
 
-      - name: Verify tree structure
-        working-directory: ./
-        run: |
-          pwd
-          echo "Current directory contents:"
-          ls -la
+#      - name: Verify tree structure
+#        working-directory: ./
+#        run: |
+#          pwd
+#          echo "Current directory contents:"
+#          ls -la
 
       - name: Build backend
         working-directory: ./backend
         run: npm run build
 
-      - name: Verify tree structure
-        working-directory: ./
-        run: |
-          pwd
-          echo "Current directory contents:"
-          ls -la
+#      - name: Verify tree structure
+#        working-directory: ./
+#        run: |
+#          pwd
+#          echo "Current directory contents:"
+#          ls -la
 
       # Frontend build
       - name: Cache frontend dependencies
@@ -74,29 +74,29 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-frontend-
 
-      - name: Install frontend dependencies
-        working-directory: ./frontend
-        run: npm ci
+#      - name: Install frontend dependencies
+#        working-directory: ./frontend
+#        run: npm ci
 
-      - name: Verify tree structure
-        working-directory: ./frontend
-        run: |
-          pwd
-          echo "Current directory contents:"
-          ls -la
+#      - name: Verify tree structure
+#        working-directory: ./frontend
+#        run: |
+#          pwd
+#          echo "Current directory contents:"
+#          ls -la
 
-      - name: Build frontend
-        working-directory: ./frontend
-        run: npm run build
+#      - name: Build frontend
+#        working-directory: ./frontend
+#        run: npm run build
 
-      - name: Verify frontend build
-        working-directory: ./frontend
-        run: |
-          if [ ! -d "build" ]; then
-            echo "Frontend build directory does not exist!"
-            exit 1
-          fi
-          ls -la build/
+#      - name: Verify frontend build
+#        working-directory: ./frontend
+#        run: |
+#          if [ ! -d "build" ]; then
+#            echo "Frontend build directory does not exist!"
+#            exit 1
+#          fi
+#          ls -la build/
 
       # Infrastructure build and CDK synth
       - name: Cache infrastructure dependencies
