@@ -12,7 +12,7 @@
     "build": "tsc",
     "cdk:build": "cdk synth",
     "cdk:deploy": "cdk deploy --all --require-approval never",
-    "cdk:deploy:backend": "cd k deploy BackendStack --require-approval never",
+    "cdk:deploy:backend": "cdk deploy BackendStack --require-approval never",
     "cdk:deploy:frontend": "cdk deploy FrontendStack --require-approval never"
   },
   "keywords": [],

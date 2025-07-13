@@ -71,9 +71,13 @@ jobs:
         working-directory: ./infrastructure
         run: npm ci
 
-      - name: Build infrastructure (CDK synth)
+      - name: Build infrastructure
         working-directory: ./infrastructure
-        run: npm run build && npm run cdk:build
+        run: npm run build
+
+      - name: CDK Synthesize
+        working-directory: ./infrastructure
+        run: pwd && ls ../frontend/build && npm run cdk:build
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -82,9 +86,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-southeast-2
 
-      - name: Deploy infrastructure (CDK deploy)
+      - name: Deploy backend infrastructure
         working-directory: ./infrastructure
-        run: npm run cdk:deploy
+        run: npm run cdk:deploy:backend
+
+      - name: Deploy frontend infrastructure
+        working-directory: ./infrastructure
+        run: npm run cdk:deploy:frontend
 
       - name: Print build completion message
         run: echo "Build and deployment completed successfully!"
