@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { handler } from '../../app/lambdas/auth/register';
-import { hashPassword, generateToken } from '../../app/utils/auth';
-import { EventService } from '../../app/utils/events';
-import { DatabaseService } from '../../app/utils/database';
+import { handler } from '../../../app/lambdas/auth/register';
+import { hashPassword, generateToken } from '../../../app/utils/auth';
+import { EventService } from '../../../app/utils/events';
+import { DatabaseService } from '../../../app/utils/database';
 
 
 vi.mock('../../app/utils/database');
