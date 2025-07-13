@@ -20,7 +20,7 @@ const RegisterSchema = z.object({
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
 
-    log.info('Register event received', { event });
+    log.info(`Register event received`, { payload: event.body });
 
     try {
         if (!event.body) {
