@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi, Mock } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { handler } from '../../app/lambdas/auth/register';
 import { hashPassword, generateToken } from '../../app/utils/auth';
 import { EventService } from '../../app/utils/events';
