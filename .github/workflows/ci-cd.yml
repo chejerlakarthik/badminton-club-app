@@ -43,7 +43,7 @@ jobs:
 
       - name: Build backend
         working-directory: ./backend
-        run: npm run build
+        run: cd backend && npm run build
 
       - name: Cache frontend dependencies
         uses: actions/cache@v4
@@ -55,11 +55,11 @@ jobs:
 
       - name: Install frontend dependencies
         working-directory: ./frontend
-        run: npm ci
+        run: cd frontend && npm ci
 
       - name: Build frontend
         working-directory: ./frontend
-        run: ls && npm run build
+        run: cd frontend && npm run build
 
       - name: Cache infrastructure dependencies
         uses: actions/cache@v4
