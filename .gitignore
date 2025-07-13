@@ -10,5 +10,5 @@ backend/build/
 backend/dist/
 
 infrastructure/cdk.out/
-infrastructure/bin/**/*.js
-infrastructure/bin/**/*.d.ts
+infrastructure/**/*.js
+infrastructure/**/*.d.ts
