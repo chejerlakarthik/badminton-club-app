@@ -37,6 +37,18 @@ jobs:
       - name: Build backend
         run: npm run build
 
+      - name: Cache frontend dependencies
+        uses: actions/cache@v4
+        with:
+          path: frontend/node_modules
+          key: ${{ runner.os }}-frontend-${{ hashFiles('frontend/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-frontend-
+
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: npm ci
+
       - name: Cache infrastructure dependencies
         uses: actions/cache@v4
         with:
@@ -62,19 +74,7 @@ jobs:
 
       - name: Deploy infrastructure (CDK deploy)
         working-directory: ./infrastructure
-        run: npx cdk deploy --require-approval never
-
-      - name: Cache frontend dependencies
-        uses: actions/cache@v4
-        with:
-          path: frontend/node_modules
-          key: ${{ runner.os }}-frontend-${{ hashFiles('frontend/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-frontend-
-
-      - name: Install frontend dependencies
-        working-directory: ./frontend
-        run: npm ci
+        run: npx cdk deploy --all --require-approval never
 
       - name: Print build completion message
         run: echo "Build and deployment completed successfully!"
