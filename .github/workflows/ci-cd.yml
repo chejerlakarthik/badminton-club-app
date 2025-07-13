@@ -22,12 +22,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Print Folder Tree
-        uses: jaywcjlove/github-action-folder-tree@main
-        with:
-          exclude: "node_modules|dist|.git|.husky"
-          path: ./src
-          depth: 2
+      - name: Verify tree structure
+        working-directory: ./
+        run: |
+          pwd
+          echo "Current directory contents:"
+          ls -la
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
