@@ -42,6 +42,7 @@ jobs:
         run: npm ci
 
       - name: Build backend
+        working-directory: ./backend
         run: npm run build
 
       - name: Cache frontend dependencies
@@ -57,6 +58,7 @@ jobs:
         run: npm ci
 
       - name: Build frontend
+        working-directory: ./frontend
         run: npm run build
 
       - name: Cache infrastructure dependencies
