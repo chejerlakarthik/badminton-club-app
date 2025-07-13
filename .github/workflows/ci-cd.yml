@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
+#  pull_request:
+#    branches:
+#      - main
 
   workflow_dispatch:
     inputs:
@@ -18,9 +18,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./backend
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -30,6 +27,7 @@ jobs:
         with:
           node-version: '22'
 
+      # Backend build
       - name: Cache backend dependencies
         uses: actions/cache@v4
         with:
@@ -39,12 +37,14 @@ jobs:
             ${{ runner.os }}-backend-
 
       - name: Install backend dependencies
+        working-directory: ./backend
         run: npm ci
 
       - name: Build backend
         working-directory: ./backend
-        run: cd backend && npm run build
+        run: npm run build
 
+      # Frontend build
       - name: Cache frontend dependencies
         uses: actions/cache@v4
         with:
@@ -55,12 +55,22 @@ jobs:
 
       - name: Install frontend dependencies
         working-directory: ./frontend
-        run: cd frontend && npm ci
+        run: npm ci
 
       - name: Build frontend
         working-directory: ./frontend
-        run: cd frontend && npm run build
+        run: npm run build
 
+      - name: Verify frontend build
+        working-directory: ./frontend
+        run: |
+          if [ ! -d "build" ]; then
+            echo "Frontend build directory does not exist!"
+            exit 1
+          fi
+          ls -la build/
+
+      # Infrastructure build and CDK synth
       - name: Cache infrastructure dependencies
         uses: actions/cache@v4
         with:
@@ -77,16 +87,24 @@ jobs:
         working-directory: ./infrastructure
         run: npm run build
 
+      - name: Verify infrastructure build
+        working-directory: ./infrastructure
+        run: |
+          if [ ! -d "lib" ]; then
+            echo "Infrastructure lib directory does not exist!"
+            exit 1
+          fi
+          ls -la lib/
+
       - name: CDK Synthesize
         working-directory: ./infrastructure
-        run: pwd && ls && npm run cdk:build
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-southeast-2
+        run: |
+          echo "Current directory: $(pwd)"
+          echo "Directory contents:"
+          ls -la
+          echo "Frontend build directory exists: $(test -d ../frontend/build && echo 'YES' || echo 'NO')"
+          echo "Running CDK synth..."
+          npm run cdk:build
 
       - name: Deploy backend infrastructure
         working-directory: ./infrastructure

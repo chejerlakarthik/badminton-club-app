@@ -20,5 +20,6 @@ new BackendStack(app, 'BackendStack', {
 new FrontendStack(app, 'FrontendStack', {
     env: {
         account: process.env.CDK_DEFAULT_ACCOUNT || AWS_ACCOUNT_ID,
+        region: process.env.CDK_DEFAULT_REGION || REGION_AP_SOUTHEAST_2,
     }
-})
+});
