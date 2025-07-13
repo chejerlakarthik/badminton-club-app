@@ -59,7 +59,7 @@ jobs:
 
       - name: Build frontend
         working-directory: ./frontend
-        run: npm run build
+        run: ls && npm run build
 
       - name: Cache infrastructure dependencies
         uses: actions/cache@v4
