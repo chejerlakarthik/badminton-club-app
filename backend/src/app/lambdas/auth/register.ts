@@ -6,6 +6,7 @@ import { hashPassword, generateToken } from '../../utils/auth';
 import { DatabaseService } from '../../utils/database';
 import { EventService } from '../../utils/events';
 import { User } from '../../types';
+import log from 'lambda-log';
 
 const RegisterSchema = z.object({
     firstName: z.string().min(1),
@@ -18,6 +19,9 @@ const RegisterSchema = z.object({
 });
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+
+    log.info('Register event received', { event });
+
     try {
         if (!event.body) {
             return createErrorResponse(400, 'Request body is required');
@@ -26,13 +30,15 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
         const body = JSON.parse(event.body);
         const validatedData = RegisterSchema.parse(body);
 
-        // Check if user already exists
+        // Check if a user already exists for the provided email
         const existingUser = await DatabaseService.query('USER#', validatedData.email);
         if (existingUser.length > 0) {
             return createErrorResponse(400, 'User already exists');
         }
 
         const userId = uuidv4();
+        log.debug('Generated userId', { userId });
+
         const passwordHash = await hashPassword(validatedData.password);
         const now = new Date().toISOString();
         const membershipExpiry = new Date();
@@ -85,9 +91,11 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
             }
         };
 
+        log.info('User created', { user: responseData.user });
+
         return createSuccessResponse(responseData, 'User registered successfully');
     } catch (error) {
-        console.error('Registration error:', error);
+        log.error('Registration error', { error });
 
         if (error instanceof z.ZodError) {
             return createErrorResponse(400, error.errors[0]?.message || 'Validation error');

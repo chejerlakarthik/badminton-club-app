@@ -19,12 +19,14 @@
     "@aws-sdk/client-ses": "^3.410.0",
     "@aws-sdk/client-sns": "^3.410.0",
     "@aws-sdk/lib-dynamodb": "^3.410.0",
+    "@types/lambda-log": "^3.0.3",
     "aws-cdk-lib": "^2.204.0",
     "aws-lambda": "^1.0.7",
     "bcryptjs": "^2.4.3",
     "cdk-dia": "^0.12.0",
     "constructs": "^10.4.2",
     "jsonwebtoken": "^9.0.2",
+    "lambda-log": "^3.1.0",
     "serverless": "^4.17.1",
     "uuid": "^9.0.0",
     "zod": "^3.22.2"
@@ -33,7 +35,8 @@
     "@types/aws-lambda": "^8.10.150",
     "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "^24.0.10",
+    "@types/node": "^24.0.13",
+    "@types/uuid": "^10.0.0",
     "vitest": "^3.2.4"
   }
 }
