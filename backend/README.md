@@ -4,12 +4,13 @@ A comprehensive serverless backend for badminton club management built with AWS 
 
 ## Architecture
 
-- **AWS Lambda**: Serverless compute for API endpoints
+- **AWS Lambda**: Serverless compute for API endpoints (Node.js 22.x runtime)
 - **Amazon DynamoDB**: NoSQL database for data storage
 - **Amazon EventBridge**: Event-driven architecture for decoupled services
 - **Amazon SES**: Email notifications
 - **Amazon SNS**: SMS notifications
 - **AWS CDK**: Infrastructure as Code
+- **esbuild**: Fast TypeScript/JavaScript bundler for production builds
 
 ## Features
 
@@ -24,7 +25,20 @@ A comprehensive serverless backend for badminton club management built with AWS 
 
 ### Prerequisites
 
-- Node.js 18.x or later
+### Lambda Function Bundling with esbuild
+
+Each Lambda function is bundled using esbuild with specific configurations for Node.js 22.x.
+
+- **Bundling Script**: Located at `backend/build.js`, it configures esbuild to compile each function separately parsing source TypeScript files into `dist`.
+- **Build Command**: Run `npm run build` to execute the bundling process.
+- **Output**: Bundled code is output into `dist` folder corresponding to the Lambda functions' folder structure.
+
+### Changes in CDK Deployment
+
+The Lambda functions are deployed by specifying individual build outputs in `dist` for each handler.
+- **CDK Code Update**: `infrastructure/lib/badminton-club-stack.ts` now loads code assets from `dist` rather than running bundling operation during deployment.
+
+- Node.js 22.x or later
 - AWS CLI configured
 - AWS CDK CLI installed
 
