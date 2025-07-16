@@ -48,6 +48,11 @@ jobs:
         run: pnpm run build
 
       # Frontend build
+      # filepath: .github/workflows/ci-cd.yml
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: pnpm install
+
       - name: Cache frontend dependencies
         uses: actions/cache@v4
         with:
