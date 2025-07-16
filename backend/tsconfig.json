@@ -31,7 +31,9 @@
     "inlineSourceMap": true,
     "inlineSources": true,
     "outDir": "./build",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "composite": true,
+    "incremental": true
   },
   "exclude": ["node_modules", "build", "cdk.out", "vitest.config.ts"]
 }

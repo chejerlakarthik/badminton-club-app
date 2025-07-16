@@ -1,5 +1,5 @@
 {
-  "name": "badminton-club-app",
+  "name": "backend",
   "version": "1.0.0",
   "description": "Serverless backend for badminton club management",
   "main": "index.js",

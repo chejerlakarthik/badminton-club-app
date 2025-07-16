@@ -21,10 +21,15 @@
   },
   "scripts": {
     "clean": "rm -rf node_modules backend/node_modules frontend/node_modules infrastructure/node_modules",
-    "reset": "npm run clean &>/dev/null && npm install",
-    "build": "tsc -b",
-    "deploy": "cdk deploy --all --require-approval never",
-    "synth": "cdk synth",
-    "test": "jest"
+    "reset": "pnpm run clean &>/dev/null && pnpm install",
+    "build": "pnpm run build:backend && pnpm run build:frontend && pnpm run build:infrastructure",
+    "build:backend": "pnpm --filter backend run build",
+    "build:frontend": "pnpm --filter frontend run build",
+    "build:infrastructure": "pnpm --filter infrastructure run build",
+    "dev": "pnpm --filter backend run dev",
+    "test": "pnpm --filter='{backend,frontend}' run test",
+    "lint": "pnpm --filter='{backend,frontend}' run lint",
+    "deploy": "pnpm --filter infrastructure run cdk:deploy",
+    "synth": "pnpm --filter infrastructure run cdk:build"
   }
 }

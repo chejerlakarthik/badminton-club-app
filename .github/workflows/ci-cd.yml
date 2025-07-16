@@ -30,6 +30,18 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
 
+      # Install root dependencies first
+      - name: Cache root dependencies
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-root-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-root-
+
+      - name: Install root dependencies
+        run: pnpm install
+
       # Backend build
       - name: Cache backend dependencies
         uses: actions/cache@v4
@@ -39,20 +51,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-backend-
 
-      - name: Install backend dependencies
-        working-directory: ./backend
-        run: pnpm install
-
       - name: Build backend
-        working-directory: ./backend
-        run: pnpm run build
+        run: pnpm run build:backend
 
       # Frontend build
-      # filepath: .github/workflows/ci-cd.yml
-      - name: Install frontend dependencies
-        working-directory: ./frontend
-        run: pnpm install
-
       - name: Cache frontend dependencies
         uses: actions/cache@v4
         with:
@@ -62,8 +64,7 @@ jobs:
             ${{ runner.os }}-frontend-
 
       - name: Build frontend
-        working-directory: ./frontend
-        run: pnpm run build
+        run: pnpm run build:frontend
 
       # Infrastructure build and CDK synth
       - name: Cache infrastructure dependencies
@@ -75,18 +76,16 @@ jobs:
             ${{ runner.os }}-infra-
 
       - name: Build infrastructure
-        working-directory: ./infrastructure
-        run: pnpm run build
+        run: pnpm run build:infrastructure
 
       - name: CDK Synthesize
-        working-directory: ./infrastructure
         run: |
           echo "Current directory: $(pwd)"
           echo "Directory contents:"
           ls -la
-          echo "Frontend build directory exists: $(test -d ../frontend/build && echo 'YES' || echo 'NO')"
+          echo "Frontend build directory exists: $(test -d frontend/build && echo 'YES' || echo 'NO')"
           echo "Running CDK synth..."
-          npm run cdk:build
+          pnpm run synth
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -96,12 +95,10 @@ jobs:
           aws-region: ap-southeast-2
 
       - name: Deploy backend infrastructure
-        working-directory: ./infrastructure
-        run: pnpm run cdk:deploy:backend
+        run: pnpm --filter infrastructure run cdk:deploy:backend
 
       - name: Deploy frontend infrastructure
-        working-directory: ./infrastructure
-        run: pnpm run cdk:deploy:frontend
+        run: pnpm --filter infrastructure run cdk:deploy:frontend
 
       - name: Print build completion message
         run: echo "Build and deployment completed successfully!"
