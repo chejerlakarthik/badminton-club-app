@@ -1,5 +1,7 @@
 # Badminton Club App - Monorepo
 
+![Github Action](https://github.com/chejerlakarthik/badminton-club-app/actions/workflows/ci-cd.yml/badge.svg)
+
 A comprehensive badminton club management application built with modern web technologies using a monorepo architecture.
 
 ## 📁 Monorepo Structure

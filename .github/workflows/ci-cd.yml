@@ -42,19 +42,6 @@ jobs:
       - name: Install root dependencies
         run: pnpm install
       
-      - name: Debug workspace structure
-        run: |
-          echo "Current directory: $(pwd)"
-          echo "Workspace file contents:"
-          cat pnpm-workspace.yaml
-          echo "\nWorkspace packages:"
-          pnpm -r list --depth=0
-          echo "\nFrontend package.json exists: $(test -f frontend/package.json && echo 'YES' || echo 'NO')"
-          if [ -f frontend/package.json ]; then
-            echo "Frontend package.json contents:"
-            head -5 frontend/package.json
-          fi
-
       # Backend build
       - name: Cache backend dependencies
         uses: actions/cache@v4
@@ -90,19 +77,6 @@ jobs:
 
       - name: Build infrastructure
         run: pnpm run build:infrastructure
-
-      - name: Verify frontend build exists
-        run: |
-          echo "Current directory: $(pwd)"
-          echo "Directory contents:"
-          ls -la
-          echo "Frontend build directory exists: $(test -d frontend/build && echo 'YES' || echo 'NO')"
-          if [ ! -d "frontend/build" ]; then
-            echo "Error: Frontend build directory not found!"
-            exit 1
-          fi
-          echo "Frontend build contents:"
-          ls -la frontend/build/
 
       - name: CDK Synthesize
         run: |
