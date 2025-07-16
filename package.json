@@ -1,4 +1,12 @@
 {
+  "name": "badminton-club-app-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend",
+    "infrastructure"
+  ],
   "dependencies": {
     "@aws-cdk/aws-apigateway": "^1.203.0",
     "@aws-cdk/aws-dynamodb": "^1.203.0",
