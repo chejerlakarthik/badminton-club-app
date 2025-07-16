@@ -54,6 +54,9 @@ jobs:
       - name: Build backend
         run: pnpm run build:backend
 
+      - name: Run backend tests
+        run: pnpm run test:backend
+      
       # Frontend build
       - name: Cache frontend dependencies
         uses: actions/cache@v4
@@ -65,6 +68,9 @@ jobs:
 
       - name: Build frontend
         run: pnpm run build:frontend
+      
+      - name: Run frontend tests
+        run: pnpm run test:frontend
 
       # Infrastructure build and CDK synth
       - name: Cache infrastructure dependencies
