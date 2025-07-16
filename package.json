@@ -28,6 +28,8 @@
     "build:infrastructure": "pnpm --filter infrastructure run build",
     "dev": "pnpm --filter backend run dev",
     "test": "pnpm --filter='{backend,frontend}' run test",
+    "test:backend": "pnpm --filter backend run test",
+    "test:frontend": "pnpm --filter frontend run test",
     "lint": "pnpm --filter='{backend,frontend}' run lint",
     "deploy": "pnpm --filter infrastructure run cdk:deploy",
     "synth": "pnpm --filter infrastructure run cdk:build"

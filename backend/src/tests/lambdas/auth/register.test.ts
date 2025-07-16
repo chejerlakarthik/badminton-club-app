@@ -5,9 +5,9 @@ import { EventService } from '../../../app/utils/events';
 import { DatabaseService } from '../../../app/utils/database';
 
 
-vi.mock('../../app/utils/database');
-vi.mock('../../app/utils/auth');
-vi.mock('../../app/utils/events');
+vi.mock('../../../app/utils/database');
+vi.mock('../../../app/utils/auth');
+vi.mock('../../../app/utils/events');
 
 const validBody = {
     firstName: 'John',
