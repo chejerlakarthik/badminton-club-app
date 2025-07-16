@@ -41,6 +41,19 @@ jobs:
 
       - name: Install root dependencies
         run: pnpm install
+      
+      - name: Debug workspace structure
+        run: |
+          echo "Current directory: $(pwd)"
+          echo "Workspace file contents:"
+          cat pnpm-workspace.yaml
+          echo "\nWorkspace packages:"
+          pnpm -r list --depth=0
+          echo "\nFrontend package.json exists: $(test -f frontend/package.json && echo 'YES' || echo 'NO')"
+          if [ -f frontend/package.json ]; then
+            echo "Frontend package.json contents:"
+            head -5 frontend/package.json
+          fi
 
       # Backend build
       - name: Cache backend dependencies
