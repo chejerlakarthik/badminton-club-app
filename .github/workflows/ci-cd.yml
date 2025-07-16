@@ -78,12 +78,21 @@ jobs:
       - name: Build infrastructure
         run: pnpm run build:infrastructure
 
-      - name: CDK Synthesize
+      - name: Verify frontend build exists
         run: |
           echo "Current directory: $(pwd)"
           echo "Directory contents:"
           ls -la
           echo "Frontend build directory exists: $(test -d frontend/build && echo 'YES' || echo 'NO')"
+          if [ ! -d "frontend/build" ]; then
+            echo "Error: Frontend build directory not found!"
+            exit 1
+          fi
+          echo "Frontend build contents:"
+          ls -la frontend/build/
+
+      - name: CDK Synthesize
+        run: |
           echo "Running CDK synth..."
           pnpm run synth
 
