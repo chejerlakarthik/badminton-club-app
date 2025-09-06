@@ -37,10 +37,16 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
 
         const validatedData = parseAttempt.data;
 
-        // Check if a user already exists for the provided email
-        const existingUser = await DatabaseService.query('USER#', validatedData.email);
-        if (existingUser.length > 0) {
-            return createErrorResponse(400, 'User already exists');
+        // Check if a user already exists with the provided email
+        const existingUserByEmail = await DatabaseService.queryGSI(`EMAIL#${validatedData.email}`, undefined, 'GSI1');
+        if (existingUserByEmail.length > 0) {
+            return createErrorResponse(400, 'A user with this email address already exists');
+        }
+
+        // Check if a user already exists with the provided phone number
+        const existingUserByPhone = await DatabaseService.queryGSI(`PHONE#${validatedData.phone}`, undefined, 'GSI2');
+        if (existingUserByPhone.length > 0) {
+            return createErrorResponse(400, 'A user with this phone number already exists');
         }
 
         const userId = randomUUID();
@@ -54,6 +60,10 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
         const user: DynamoUser = {
             PK: `USER#${userId}`,
             SK: `USER#${userId}`,
+            GSI1PK: `EMAIL#${validatedData.email}`,
+            GSI1SK: `USER#${userId}`,
+            GSI2PK: `PHONE#${validatedData.phone}`,
+            GSI2SK: `USER#${userId}`,
             userId,
             email: validatedData.email,
             firstName: validatedData.firstName,

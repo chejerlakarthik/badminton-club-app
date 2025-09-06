@@ -1,6 +1,10 @@
 export type DynamoUser = {
     PK: string; // USER#userId
     SK: string; // USER#userId
+    GSI1PK?: string; // EMAIL#email (for email uniqueness check)
+    GSI1SK?: string; // USER#userId
+    GSI2PK?: string; // PHONE#phone (for phone uniqueness check)
+    GSI2SK?: string; // USER#userId
     userId: string;
     email: string;
     firstName: string;
