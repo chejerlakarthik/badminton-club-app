@@ -1,14 +1,14 @@
 import React, {JSX} from 'react';
-import { CheckCircle, XCircle, AlertCircle } from 'lucide-react';
-import { Poll, Member } from '../types';
+import {CheckCircle, XCircle, CircleQuestionMark} from 'lucide-react';
+import {Poll, Member, Availability} from '../types';
 
 interface PollCardProps {
   poll: Poll;
   members: Member[];
-  handleRSVP: (availability: 'available' | 'unavailable' | 'maybe') => void;
+  handleRSVP: (availability: Availability) => void;
   isExpired: (date: Date) => boolean;
   getResponseSummary: () => { [key: string]: number };
-  getAvailabilityIcon: (availability?: string) => JSX.Element;
+  getAvailabilityIcon: (availability?: Availability) => JSX.Element;
 }
 
 const PollCard: React.FC<PollCardProps> = ({ poll, members, handleRSVP, isExpired, getResponseSummary, getAvailabilityIcon }) => (
@@ -47,19 +47,20 @@ const PollCard: React.FC<PollCardProps> = ({ poll, members, handleRSVP, isExpire
           <span>Available</span>
         </button>
         <button
-          onClick={() => handleRSVP('maybe')}
-          className="flex items-center space-x-2 px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700"
-        >
-          <AlertCircle className="w-4 h-4" />
-          <span>Maybe</span>
+              onClick={() => handleRSVP('unavailable')}
+              className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+          >
+           <XCircle className="w-4 h-4" />
+           <span>Unavailable</span>
         </button>
         <button
-          onClick={() => handleRSVP('unavailable')}
-          className="flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+          onClick={() => handleRSVP('tentative')}
+          className="flex items-center space-x-2 px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700"
         >
-          <XCircle className="w-4 h-4" />
-          <span>Unavailable</span>
+          <CircleQuestionMark className="w-4 h-4" />
+          <span>Tentative</span>
         </button>
+
       </div>
     )}
 

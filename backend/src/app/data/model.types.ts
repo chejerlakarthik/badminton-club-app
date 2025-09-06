@@ -1,4 +1,4 @@
-export interface User {
+export type DynamoUser = {
     PK: string; // USER#userId
     SK: string; // USER#userId
     userId: string;
@@ -8,7 +8,6 @@ export interface User {
     phone: string;
     passwordHash: string;
     membershipType: 'basic' | 'premium' | 'student' | 'family';
-    membershipExpiry: string;
     skillLevel: 'beginner' | 'intermediate' | 'advanced';
     role: 'member' | 'admin';
     isActive: boolean;
@@ -16,7 +15,7 @@ export interface User {
     updatedAt: string;
 }
 
-export interface Court {
+export type DynamoCourt = {
     PK: string; // COURT#courtId
     SK: string; // COURT#courtId
     courtId: string;
@@ -29,7 +28,7 @@ export interface Court {
     updatedAt: string;
 }
 
-export interface Booking {
+export type DynamoBooking = {
     PK: string; // BOOKING#bookingId
     SK: string; // BOOKING#bookingId
     GSI1PK: string; // USER#userId
@@ -48,42 +47,4 @@ export interface Booking {
     notes?: string;
     createdAt: string;
     updatedAt: string;
-}
-
-export interface Tournament {
-    PK: string; // TOURNAMENT#tournamentId
-    SK: string; // TOURNAMENT#tournamentId
-    tournamentId: string;
-    name: string;
-    description?: string;
-    startDate: string;
-    endDate: string;
-    registrationDeadline: string;
-    entryFee: number;
-    maxParticipants: number;
-    category: 'singles' | 'doubles' | 'mixed-doubles';
-    skillLevel: 'beginner' | 'intermediate' | 'advanced' | 'open';
-    status: 'upcoming' | 'registration-open' | 'registration-closed' | 'ongoing' | 'completed';
-    participants: TournamentParticipant[];
-    winnerId?: string;
-    runnerUpId?: string;
-    createdAt: string;
-    updatedAt: string;
-}
-
-export interface TournamentParticipant {
-    userId: string;
-    registrationDate: string;
-    paymentStatus: 'pending' | 'paid';
-}
-
-export interface APIResponse<T = any> {
-    statusCode: number;
-    headers: {
-        'Content-Type': string;
-        'Access-Control-Allow-Origin': string;
-        'Access-Control-Allow-Methods': string;
-        'Access-Control-Allow-Headers': string;
-    };
-    body: string;
 }

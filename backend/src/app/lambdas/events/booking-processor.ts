@@ -1,7 +1,7 @@
 import { EventBridgeEvent } from 'aws-lambda';
-import { DatabaseService } from '../../utils/database';
+import { DatabaseService } from '../../data/database';
 import { NotificationService } from '../../utils/notifications';
-import { User, Court } from '../../types';
+import { DynamoUser, DynamoCourt } from '../../data/model.types';
 
 export const handler = async (event: EventBridgeEvent<string, any>) => {
     try {
@@ -22,8 +22,8 @@ export const handler = async (event: EventBridgeEvent<string, any>) => {
 
 async function handleBookingCreated(detail: any) {
     // Send booking confirmation email
-    const user = await DatabaseService.get(`USER#${detail.userId}`, `USER#${detail.userId}`) as User;
-    const court = await DatabaseService.get(`COURT#${detail.courtId}`, `COURT#${detail.courtId}`) as Court;
+    const user = await DatabaseService.get(`USER#${detail.userId}`, `USER#${detail.userId}`) as DynamoUser;
+    const court = await DatabaseService.get(`COURT#${detail.courtId}`, `COURT#${detail.courtId}`) as DynamoCourt;
 
     if (user && court) {
         await NotificationService.sendBookingConfirmation(user, detail, court);

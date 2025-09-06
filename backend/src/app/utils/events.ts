@@ -1,13 +1,31 @@
 import { EventBridgeClient, PutEventsCommand } from '@aws-sdk/client-eventbridge';
+import {User} from "../types/entities.types";
 
 const eventBridge = new EventBridgeClient({ region: process.env.AWS_REGION || 'ap-southeast-2' });
 const EVENT_BUS_NAME = process.env.EVENT_BUS_NAME || 'badminton-club-events';
 
-export interface ClubEvent {
-    source: string;
-    detailType: string;
-    detail: any;
+type UserDetailType = 'UserRegistered' | 'UserLoginSuccess' | 'UserLoginFailed';
+
+type UserRegisteredEvent = {
+    source: 'badminton-club.users';
+    detailType: 'UserRegistered';
+    detail: User;
 }
+
+type UserLoginSuccessEvent = {
+    source: 'badminton-club.users';
+    detailType: 'UserLoginSuccess';
+    detail: User;
+}
+
+type UserLoginFailedEvent = {
+    source: 'badminton-club.users';
+    detailType: 'UserLoginFailed';
+    detail: User;
+}
+
+export type ClubEvent = UserRegisteredEvent | UserLoginSuccessEvent | UserLoginFailedEvent;
+
 
 export class EventService {
     static async publishEvent(event: ClubEvent) {
@@ -25,27 +43,11 @@ export class EventService {
         await eventBridge.send(command);
     }
 
-    static async publishBookingEvent(eventType: string, booking: any) {
-        await this.publishEvent({
-            source: 'badminton-club.bookings',
-            detailType: eventType,
-            detail: booking
-        });
-    }
-
-    static async publishUserEvent(eventType: string, user: any) {
+    static async publishUserEvent(eventType: UserDetailType, user: User) {
         await this.publishEvent({
             source: 'badminton-club.users',
             detailType: eventType,
             detail: user
-        });
-    }
-
-    static async publishTournamentEvent(eventType: string, tournament: any) {
-        await this.publishEvent({
-            source: 'badminton-club.tournaments',
-            detailType: eventType,
-            detail: tournament
         });
     }
 }

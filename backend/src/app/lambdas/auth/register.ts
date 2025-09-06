@@ -1,12 +1,12 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 import { createSuccessResponse, createErrorResponse } from '../../utils/response';
 import { hashPassword, generateToken } from '../../utils/auth';
-import { DatabaseService } from '../../utils/database';
+import { DatabaseService } from '../../data/database';
 import { EventService } from '../../utils/events';
-import { User } from '../../types';
+import { DynamoUser } from '../../data/model.types';
 import log from 'lambda-log';
+import { randomUUID } from "node:crypto";
 
 const RegisterSchema = z.object({
     firstName: z.string().min(1),
@@ -28,7 +28,14 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
         }
 
         const body = JSON.parse(event.body);
-        const validatedData = RegisterSchema.parse(body);
+        const parseAttempt = RegisterSchema.safeParse(body);
+
+        if (!parseAttempt.success) {
+            log.error('Validation failed', {errors: parseAttempt.error.errors});
+            return createErrorResponse(400, 'Invalid input data');
+        }
+
+        const validatedData = parseAttempt.data;
 
         // Check if a user already exists for the provided email
         const existingUser = await DatabaseService.query('USER#', validatedData.email);
@@ -36,7 +43,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
             return createErrorResponse(400, 'User already exists');
         }
 
-        const userId = uuidv4();
+        const userId = randomUUID();
         log.debug('Generated userId', { userId });
 
         const passwordHash = await hashPassword(validatedData.password);
@@ -44,7 +51,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
         const membershipExpiry = new Date();
         membershipExpiry.setFullYear(membershipExpiry.getFullYear() + 1);
 
-        const user: User = {
+        const user: DynamoUser = {
             PK: `USER#${userId}`,
             SK: `USER#${userId}`,
             userId,
@@ -54,7 +61,6 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
             phone: validatedData.phone,
             passwordHash,
             membershipType: validatedData.membershipType || 'basic',
-            membershipExpiry: membershipExpiry.toISOString(),
             skillLevel: validatedData.skillLevel || 'beginner',
             role: 'member',
             isActive: true,
@@ -91,7 +97,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
             }
         };
 
-        log.info('User created', { user: responseData.user });
+        log.info('User registered successfully', { user: responseData.user });
 
         return createSuccessResponse(responseData, 'User registered successfully');
     } catch (error) {

@@ -2,8 +2,8 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { z } from 'zod';
 import { createSuccessResponse, createErrorResponse } from '../../utils/response';
 import { comparePassword, generateToken } from '../../utils/auth';
-import { DatabaseService } from '../../utils/database';
-import { User } from '../../types';
+import { DatabaseService } from '../../data/database';
+import { DynamoUser } from '../../data/model.types';
 
 const LoginSchema = z.object({
     email: z.string().email(),
@@ -15,9 +15,14 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
         if (!event.body) {
             return createErrorResponse(400, 'Request body is required');
         }
-
         const body = JSON.parse(event.body);
-        const { email, password } = LoginSchema.parse(body);
+        const parseResult = LoginSchema.safeParse(body);
+
+        if (!parseResult.success) {
+            return createErrorResponse(400, 'Bad request');
+        }
+
+        const { email, password } = parseResult.data;
 
         // Find user by email (scan operation - in production, consider using GSI)
         const users = await DatabaseService.scan(
@@ -29,7 +34,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
             return createErrorResponse(400, 'Invalid credentials');
         }
 
-        const user = users[0] as User;
+        const user = users[0] as DynamoUser;
 
         // Check password
         const isPasswordValid = await comparePassword(password, user.passwordHash);

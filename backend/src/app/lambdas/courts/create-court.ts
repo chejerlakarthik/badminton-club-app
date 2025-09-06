@@ -2,8 +2,8 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { z } from 'zod';
 import { createSuccessResponse, createErrorResponse } from '../../utils/response';
 import { getUserFromEvent } from '../../utils/auth';
-import { DatabaseService } from '../../utils/database';
-import { Court } from '../../types';
+import { DatabaseService } from '../../data/database';
+import { DynamoCourt } from '../../data/model.types';
 import * as crypto from "node:crypto";
 
 const CreateCourtSchema = z.object({
@@ -32,7 +32,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
         const courtId = crypto.randomUUID();
         const now = new Date().toISOString();
 
-        const court: Court = {
+        const court: DynamoCourt = {
             PK: `COURT#${courtId}`,
             SK: `COURT#${courtId}`,
             courtId,

@@ -1,6 +1,6 @@
 import { handler } from '../../app/lambdas/courts/create-court';
 import { APIGatewayProxyEvent } from 'aws-lambda';
-import { DatabaseService } from '../../app/utils/database';
+import { DatabaseService } from '../../app/data/database';
 import { createSuccessResponse, createErrorResponse } from '../../app/utils/response';
 import { getUserFromEvent } from '../../app/utils/auth';
 import { describe, it, expect, beforeEach, vi, Mock } from 'vitest';

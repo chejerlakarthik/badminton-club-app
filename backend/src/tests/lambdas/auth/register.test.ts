@@ -2,12 +2,22 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { handler } from '../../../app/lambdas/auth/register';
 import { hashPassword, generateToken } from '../../../app/utils/auth';
 import { EventService } from '../../../app/utils/events';
-import { DatabaseService } from '../../../app/utils/database';
+import { DatabaseService } from '../../../app/data/database';
 
-
-vi.mock('../../../app/utils/database');
+// Mock the modules
+vi.mock('../../../app/data/database');
 vi.mock('../../../app/utils/auth');
 vi.mock('../../../app/utils/events');
+vi.mock('lambda-log', () => ({
+    default: {
+        info: vi.fn(),
+        error: vi.fn(),
+        debug: vi.fn()
+    }
+}));
+vi.mock('node:crypto', () => ({
+    randomUUID: vi.fn(() => 'test-uuid-123')
+}));
 
 const validBody = {
     firstName: 'John',
@@ -29,11 +39,11 @@ beforeEach(() => {
 
 describe('register handler', () => {
     it('registers a new user successfully', async () => {
-        (DatabaseService.query as any).mockResolvedValue([]);
-        (hashPassword as any).mockResolvedValue('hashedPassword');
-        (DatabaseService.put as any).mockResolvedValue(undefined);
-        (generateToken as any).mockReturnValue('jwtToken');
-        (EventService.publishUserEvent as any).mockResolvedValue(undefined);
+        vi.mocked(DatabaseService.query).mockResolvedValue([]);
+        vi.mocked(hashPassword).mockResolvedValue('hashedPassword');
+        vi.mocked(DatabaseService.put).mockResolvedValue(undefined);
+        vi.mocked(generateToken).mockReturnValue('jwtToken');
+        vi.mocked(EventService.publishUserEvent).mockResolvedValue(undefined);
 
         const res = await handler(event as any);
         expect(res.statusCode).toBe(200);
@@ -48,7 +58,7 @@ describe('register handler', () => {
     });
 
     it('returns error if user already exists', async () => {
-        (DatabaseService.query as any).mockResolvedValue([{}]);
+        vi.mocked(DatabaseService.query).mockResolvedValue([{ userId: 'existing-user' }]);
         const res = await handler(event as any);
         expect(res.statusCode).toBe(400);
         expect(JSON.parse(res.body).error).toBe('User already exists');
@@ -58,11 +68,11 @@ describe('register handler', () => {
         const invalidEvent = { body: JSON.stringify({ ...validBody, email: 'not-an-email' }) };
         const res = await handler(invalidEvent as any);
         expect(res.statusCode).toBe(400);
-        expect(JSON.parse(res.body).error).toMatch(/email/);
+        expect(JSON.parse(res.body).error).toBe('Invalid input data');
     });
 
     it('returns internal server error on unexpected exception', async () => {
-        (DatabaseService.query as any).mockImplementation(() => { throw new Error('DB error'); });
+        vi.mocked(DatabaseService.query).mockImplementation(() => { throw new Error('DB error'); });
         const res = await handler(event as any);
         expect(res.statusCode).toBe(500);
         expect(JSON.parse(res.body).error).toBe('Internal server error');

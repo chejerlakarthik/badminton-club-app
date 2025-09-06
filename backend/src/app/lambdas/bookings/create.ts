@@ -3,9 +3,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 import { createSuccessResponse, createErrorResponse } from '../../utils/response';
 import { getUserFromEvent } from '../../utils/auth';
-import { DatabaseService } from '../../utils/database';
+import { DatabaseService } from '../../data/database';
 import { EventService } from '../../utils/events';
-import { Booking, Court } from '../../types';
+import { DynamoBooking, DynamoCourt } from '../../data/model.types';
 
 const CreateBookingSchema = z.object({
     courtId: z.string().uuid(),
@@ -26,7 +26,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
         const { courtId, date, startTime, endTime, notes } = CreateBookingSchema.parse(body);
 
         // Check if court exists
-        const court = await DatabaseService.get(`COURT#${courtId}`, `COURT#${courtId}`) as Court;
+        const court = await DatabaseService.get(`COURT#${courtId}`, `COURT#${courtId}`) as DynamoCourt;
         if (!court || !court.isActive) {
             return createErrorResponse(404, 'Court not found or inactive');
         }
@@ -60,7 +60,7 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
         const bookingId = uuidv4();
         const now = new Date().toISOString();
 
-        const booking: Booking = {
+        const booking: DynamoBooking = {
             PK: `BOOKING#${bookingId}`,
             SK: `BOOKING#${bookingId}`,
             GSI1PK: `USER#${user.userId}`,

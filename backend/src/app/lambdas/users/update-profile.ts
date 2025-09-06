@@ -2,7 +2,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { z } from 'zod';
 import { createSuccessResponse, createErrorResponse } from '../../utils/response';
 import { getUserFromEvent } from '../../utils/auth';
-import { DatabaseService } from '../../utils/database';
+import { DatabaseService } from '../../data/database';
 
 const UpdateProfileSchema = z.object({
     firstName: z.string().min(1).optional(),

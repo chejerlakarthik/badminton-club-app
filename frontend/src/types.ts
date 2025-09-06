@@ -2,6 +2,10 @@ export interface User {
   id: number;
   name: string;
   role: string;
+  email?: string;
+  phone?: string;
+  membershipType?: string;
+  skillLevel?: string;
 }
 
 export interface Member {
@@ -13,9 +17,11 @@ export interface Member {
   status: string;
 }
 
+export type Availability = 'available' | 'unavailable' | 'tentative' | 'pending';
+
 export interface PollResponse {
   memberId: number;
-  availability: 'available' | 'unavailable' | 'maybe';
+  availability: Availability;
   timestamp: Date;
 }
 

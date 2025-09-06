@@ -16,7 +16,6 @@
     "clean": "rm -rf node_modules",
     "reset": "npm run clean &>/dev/null && npm install",
     "dev": "vite",
-    "start": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "test": "vitest",

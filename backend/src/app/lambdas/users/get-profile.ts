@@ -1,14 +1,14 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { createSuccessResponse, createErrorResponse } from '../../utils/response';
 import { getUserFromEvent } from '../../utils/auth';
-import { DatabaseService } from '../../utils/database';
-import { User } from '../../types';
+import { DatabaseService } from '../../data/database';
+import { DynamoUser } from '../../data/model.types';
 
 export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     try {
         const user = getUserFromEvent(event);
 
-        const userData = await DatabaseService.get(`USER#${user.userId}`, `USER#${user.userId}`) as User;
+        const userData = await DatabaseService.get(`USER#${user.userId}`, `USER#${user.userId}`) as DynamoUser;
 
         if (!userData) {
             return createErrorResponse(404, 'User not found');

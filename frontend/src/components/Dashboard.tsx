@@ -1,17 +1,17 @@
 import React, {JSX} from 'react';
 import { UserPlus, DollarSign } from 'lucide-react';
-import { Poll, Member } from '../types';
+import {Poll, Member, Availability} from '../types';
 import PollCard from './PollCard';
 
 interface DashboardProps {
   currentPoll: Poll | null;
   members: Member[];
-  handleRSVP: (availability: 'available' | 'unavailable' | 'maybe') => void;
+  handleRSVP: (availability: Availability) => void;
   setShowInviteModal: (show: boolean) => void;
   setShowExpenseModal: (show: boolean) => void;
   isExpired: (date: Date) => boolean;
   getResponseSummary: () => { [key: string]: number };
-  getAvailabilityIcon: (availability?: string) => JSX.Element;
+  getAvailabilityIcon: (availability?: Availability) => JSX.Element;
 
 }
 
