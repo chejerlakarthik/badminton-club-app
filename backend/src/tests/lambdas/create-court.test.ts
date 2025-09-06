@@ -5,7 +5,7 @@ import { createSuccessResponse, createErrorResponse } from '../../app/utils/resp
 import { getUserFromEvent } from '../../app/utils/auth';
 import { describe, it, expect, beforeEach, vi, Mock } from 'vitest';
 
-vi.mock('../../app/utils/database');
+vi.mock('../../app/data/database');
 vi.mock('../../app/utils/response');
 vi.mock('../../app/utils/auth');
 
@@ -25,13 +25,13 @@ describe('Create Court Lambda Handler', () => {
         } as any;
 
         (getUserFromEvent as unknown as Mock).mockReturnValue({ role: 'admin' });
-        (DatabaseService.put as unknown as Mock).mockResolvedValue(undefined);
+        vi.mocked(DatabaseService.put).mockResolvedValue(undefined);
         (createSuccessResponse as unknown as Mock).mockReturnValue({ statusCode: 200 });
 
         const result = await handler(mockEvent);
 
         expect(result).toEqual({ statusCode: 200 });
-        expect(DatabaseService.put).toHaveBeenCalled();
+        expect(vi.mocked(DatabaseService.put)).toHaveBeenCalled();
     });
 
     it('returns error response when request body is missing', async () => {
@@ -71,7 +71,7 @@ describe('Create Court Lambda Handler', () => {
 
         const result = await handler(mockEvent);
 
-        expect(result).toEqual(createErrorResponse(400, 'Validation error'));
+        expect(result).toEqual(createErrorResponse(400, 'String must contain at least 1 character(s)'));
     });
 
     it('returns error response for unexpected errors', async () => {
@@ -84,7 +84,7 @@ describe('Create Court Lambda Handler', () => {
         } as any;
 
         (getUserFromEvent as unknown as Mock).mockReturnValue({ role: 'admin' });
-        (DatabaseService.put as unknown as Mock).mockRejectedValue(new Error('Unexpected error'));
+        vi.mocked(DatabaseService.put).mockRejectedValue(new Error('Unexpected error'));
 
         const result = await handler(mockEvent);
 

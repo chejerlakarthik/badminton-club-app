@@ -12,7 +12,7 @@ describe('login handler', () => {
             body: JSON.stringify({ email: 'john@example.com', password: 'password123' })
         };
 
-        (DatabaseService.scan as any).mockResolvedValue([
+        vi.mocked(DatabaseService.scan).mockResolvedValue([
             {
                 userId: 'user123',
                 email: 'john@example.com',
@@ -24,8 +24,8 @@ describe('login handler', () => {
                 role: 'member'
             }
         ]);
-        (comparePassword as any).mockResolvedValue(true);
-        (generateToken as any).mockReturnValue('jwtToken');
+        vi.mocked(comparePassword).mockResolvedValue(true);
+        vi.mocked(generateToken).mockReturnValue('jwtToken');
 
         const res = await loginHandler(event as any);
 
@@ -46,7 +46,7 @@ describe('login handler', () => {
             body: JSON.stringify({ email: 'john@example.com', password: 'wrongPassword' })
         };
 
-        (DatabaseService.scan as any).mockResolvedValue([
+        vi.mocked(DatabaseService.scan).mockResolvedValue([
             {
                 userId: 'user123',
                 email: 'john@example.com',
@@ -54,7 +54,7 @@ describe('login handler', () => {
                 isActive: true
             }
         ]);
-        (comparePassword as any).mockResolvedValue(false);
+        vi.mocked(comparePassword).mockResolvedValue(false);
 
         const res = await loginHandler(event as any);
 
@@ -67,7 +67,7 @@ describe('login handler', () => {
             body: JSON.stringify({ email: 'john@example.com', password: 'password123' })
         };
 
-        (DatabaseService.scan as any).mockResolvedValue([
+        vi.mocked(DatabaseService.scan).mockResolvedValue([
             {
                 userId: 'user123',
                 email: 'john@example.com',
@@ -75,7 +75,7 @@ describe('login handler', () => {
                 isActive: false
             }
         ]);
-        (comparePassword as any).mockResolvedValue(true);
+        vi.mocked(comparePassword).mockResolvedValue(true);
 
         const res = await loginHandler(event as any);
 
@@ -98,7 +98,7 @@ describe('login handler', () => {
             body: JSON.stringify({ email: 'john@example.com', password: 'password123' })
         };
 
-        (DatabaseService.scan as any).mockImplementation(() => {
+        vi.mocked(DatabaseService.scan).mockImplementation(() => {
             throw new Error('DB error');
         });
 
