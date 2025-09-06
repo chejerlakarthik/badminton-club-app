@@ -22,7 +22,7 @@ test('renders navigation tabs', () => {
 });
 
 test('highlights active tab', () => {
-  const { container } = render(<Navigation activeTab="members" setActiveTab={mockSetActiveTab} />);
+  render(<Navigation activeTab="members" setActiveTab={mockSetActiveTab} />);
   
   // The active tab should have different styling
   const membersButton = screen.getByText('Members').closest('button');
